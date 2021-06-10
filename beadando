@@ -1,0 +1,131 @@
+#!/bin/bash
+echo ""
+echo "Üdvüzlöm ez a program segíteni fogja Önt, hogy átlássa az árammal és vizzel kapcsolatos pénzügyi dolgait!"
+echo""
+echo "Arra kérem Önt, hogy válasszon a lehetőségek közül:"
+echo "-1: 1 fős háztartásban élek."
+echo "-2: 2 fős háztartásban élek." 
+echo "-3: 3 fős háztartásban élek."
+echo "-4: 4 fős háztartásban élek."
+echo "-5: Még ennél is több fős háztartásban élek."
+echo ""
+
+read valasztas
+aramar=37
+
+if [ $valasztas -eq  1 ]
+then
+    osszeg=$((aramar * 120))
+    vizfogy=$((1 * 30 * 125))
+    osszeg2=$(((vizfogy / 1000) * 750))
+fi
+if [ $valasztas -eq 2 ]
+then
+    osszeg=$((aramar * 180))
+    vizfogy=$((2 * 30 * 125))
+    osszeg2=$(((vizfogy / 1000) * 750))
+fi
+if [ $valasztas -eq 3 ]
+then
+    osszeg=$((aramar * 190))
+    vizfogy=$((3 * 30 * 125))
+    osszeg2=$(((vizfogy / 1000) * 750))
+fi
+if [ $valasztas -eq 4 ]
+then
+    osszeg=$((aramar * 200))
+    vizfogy=$((4 * 30 * 125))
+    osszeg2=$(((vizfogy / 1000) * 750))
+fi
+if [ $valasztas -eq 5 ]
+then
+echo "Kérem adja meg mennyien vannak a háztartásban. (minimum 5)"
+read szam
+    while [ $szam -lt 5 ]
+do
+    echo "Rossz számot adott meg. Kérem adja meg újra"
+    read szam
+done 
+    osszeg=$((aramar * szam * 55))
+    vizfogy=$((szam * 30 * 125))
+    osszeg2=$(((vizfogy / 1000) * 750))
+fi
+echo ""
+echo "Havi áramfelhasználás ára:"
+echo $osszeg "Ft"
+echo "Havi vízfelhasználás ellátás: "
+echo $osszeg2 "Ft"
+echo "Összesített ár:"
+echo $((osszeg2 + osszeg)) "Ft"
+
+echo ""
+echo "Kéri a tippeket, hogy hogyan tudna spórolni? (Ajánlott)(I/N)"
+read valasz
+if [ $valasz = 'I' ]
+then
+    kerem=true
+fi
+if [ $valasz = 'N' ]
+then
+    kerem=false
+fi
+
+if [ $kerem = true ]
+then
+fajl="sporol.txt"
+while IFS= read -r line
+do
+    echo "$line"
+done < "$fajl"
+else
+echo "Sajnálom, hogy nem kért a tippekből. :("
+fi
+echo ""
+echo "A tippek mellé persze az is tartozik, hogy évi szinten mennyit tudsz spórolni!"
+echo "A sorszám kiválasztásával megbírod jeleníteni mennyit tudsz spórolni. (ha 0-et írsz kilépsz a választásból.)"
+futas=true
+valasz=10
+while [ $valasz -gt 0 ]
+do
+    read valasz
+if [ $valasz -eq 1 ]
+then
+    echo "3500 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 2 ]
+then
+    echo "2300 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 3 ]
+then
+    echo "8000 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 4 ]
+then
+    echo "6000 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 5 ]
+then
+    echo "12000 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 6 ]
+then
+    echo "5000 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 7 ]
+then
+    echo "30000 Ft-ot képes vele spórolni egy évben."
+fi
+if [ $valasz -eq 8 ]
+then
+    echo "10000 Ft-ot képes vele spórolni."
+fi
+done
+
+echo ""
+echo "Köszönöm, hogy eddig eljutott a programomban ezért érdekesség képpen megjelenítek Önnek egy angol cikket az energiatakarékosságról! :)"
+echo ""
+# csak az miatt catelem ki a beadandoangol-t és nem a beadnadoangol2-t mert igazából a 2 szövege ugyanaz csak az egyiket már
+# rendeztem enterrel, hogy olvashatóbb legyen a szövege
+curl pune.gen.in/india/short-paragraph-save-energy/5399/ | grep -o '<p>.*</p>' | sed 's/\(<p>\|<\/p>\)//g' > beadandoangol2.txt
+cat beadandoangol.txt
